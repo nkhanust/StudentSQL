@@ -1,33 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
 using sql_web_api.Models;
+using System;
 using System.Collections.Generic;
-using RouteAttribute = Microsoft.AspNetCore.Components.RouteAttribute;
-namespace StudentSQL.Controllers
-{
+using System.Linq;
 
+namespace StudentSQL.Controllers
+
+{
     [Route("api/[controller]")]
     [ApiController]
 
     public class PersonsController : ControllerBase
     {
-        //public List<Person> persons = new List<Person>()
-        //{
-        //    new Person {Id = 1, FirstName = "Nabeel", LastName = "Khan", SupervisorId = 1, BranchId = 100}
-        //};
+        //Adding new person to database
+        public List<Person> persons = new()
+        {
+            new Person {Id = 1, FirstName = "Nabeel", LastName = "Khan", SupervisorId = 1, BranchId = 100}
+        };
 
-        private IPersonRepository persons = new PersonRepository();
-
+        //Get methods below
         [HttpGet]
         public ActionResult<IEnumerable<Person>> GetAllPersons()
         {
-            return Persons;
+            return persons;
         }
 
-        [HttpGet("{id}")]
 
+        [HttpGet("{id}")]
         public ActionResult<Person> GetPerson(int id)
         {
-            var person = person.GetPerson(id);
+            var person = persons.FirstOrDefault(x => x.Id == id);
             if (person == null)
             {
                 return NotFound();
@@ -35,7 +37,4 @@ namespace StudentSQL.Controllers
             return person;
         }
     }
-
-
-
 }

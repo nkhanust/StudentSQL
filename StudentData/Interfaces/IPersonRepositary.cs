@@ -1,13 +1,9 @@
-﻿using sql_web_api.Models;
-using System;
+﻿using StudentData.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentData.Interfaces
 {
-    interface IPersonRepositories
+    interface IPersonRepositary
     {
         List<Person> GetALlPersons();
 

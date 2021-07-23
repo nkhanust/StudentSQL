@@ -1,13 +1,11 @@
-﻿using sql_web_api.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using StudentData.Interfaces;
+using StudentData.Models;
 
 namespace StudentData.Repositories
 {
-    class PersonRepository : IPersonRespository
+    class PersonRepository : IPersonRepositary
     {
 
         public List<Person> persons = new List<Person>()
@@ -19,6 +17,11 @@ namespace StudentData.Repositories
         public List<Person> GetAllPersons()
         {
             return persons;
+        }
+
+        public List<Person> GetALlPersons()
+        {
+            throw new System.NotImplementedException();
         }
 
         public Person GetPerson(int id)
