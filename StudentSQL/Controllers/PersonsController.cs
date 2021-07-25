@@ -3,6 +3,10 @@ using sql_web_api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using sql.client;
+using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
+
 
 namespace StudentSQL.Controllers
 
@@ -29,12 +33,31 @@ namespace StudentSQL.Controllers
         [HttpGet("{id}")]
         public ActionResult<Person> GetPerson(int id)
         {
-            var person = persons.FirstOrDefault(x => x.Id == id);
-            if (person == null)
+            try
             {
-                return NotFound();
+                string ConnectingString = this.Configuration.GetConnection("MyConnection");
+                using (SqlConnection con = new sqlConnection(ConnectingString))
+                {
+                    con.Open();
+                    SqlCommand Command = new SqlCommand("SelectAllitem", con);
+                    Command.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataReader reader = Command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                           Console.WriteLine(string.Format)
+                        }
+                    }
+                }
             }
-            return person;
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+
+            
         }
     }
 }
