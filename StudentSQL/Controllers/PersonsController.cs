@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System.Data;
+using studentdatasql.Respositories;
+using studentdatasql.Models;
 
 
 namespace StudentSQL.Controllers
@@ -15,13 +13,13 @@ namespace StudentSQL.Controllers
     {
 
         private IConfiguration Configuration;
-        private static PersonsRepository persons;
+        private static PersonRepository persons;
 
 
-        public PersonsController(IConfiguration_configuration)
+        public PersonsController(IConfiguration _configuration)
         {
             Configuration = _configuration;
-            //persons - new PersonsRepository(_configuration);
+            persons = new PersonRepository(_configuration);
 
         }
 
@@ -32,7 +30,7 @@ namespace StudentSQL.Controllers
         }
 
         [HttpPost]
-        public void PostPerson(Person person)
+        public string PostPerson(Person person)
         {
             return persons.PostPerson(person);
         }

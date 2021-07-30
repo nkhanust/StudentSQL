@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace studentdatasql.Interfaces
 {
-    interface IPersonRepositor
+    interface IPersonRepository
     {
         void GetPerson();
 
@@ -18,5 +18,4 @@ namespace studentdatasql.Interfaces
         string DeletePerson(Person person);
     }
 
-    
 }

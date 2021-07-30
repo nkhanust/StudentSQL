@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using studentdatasql.Interfaces;
 using studentdatasql.Models;
 using System;
 using System.Data;
@@ -13,7 +14,7 @@ namespace studentdatasql.Respositories
         //Adding new person to database
         private IConfiguration Configuration;
 
-        public PersonRepository(IConfiguration_configuration)
+        public PersonRepository(IConfiguration _configuration)
         {
             Configuration = _configuration;
         }
@@ -24,8 +25,8 @@ namespace studentdatasql.Respositories
 
             try
             {
-                string Connectionstrings = this.Configuration.GetConnectionString("MyConnection"); // calls appsetting.json and obtaining the connection string
-                using (SqlConnection con = new SqlConnection(ConnectionString)) // settign up sql connection
+                string connectionString = this.Configuration.GetConnectionString("MyConnection"); // calls appsetting.json and obtaining the connection string
+                using (SqlConnection con = new SqlConnection(connectionString)) // settign up sql connection
                 {
                     con.Open(); //initialising the connection
                     SqlCommand command = new SqlCommand("selectallprersons", con); //calling procedure of selectallprersons that shortcut to select all student database
@@ -44,9 +45,9 @@ namespace studentdatasql.Respositories
             {
                 Console.WriteLine(e.Message);
             }
-            return null;
+           
         }
-       
+
         //for httppost
         public string PostPerson(Person person)
         {
@@ -93,9 +94,7 @@ namespace studentdatasql.Respositories
                 using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
                     con.Open();
-                    //string query = "UPDATE INTO dbo.studentdata SET NAME = @" +
-                    //    "([Id], [FirstName], [LastName], [SupervisorId], [BranchId]) VALUES " +
-                    //    "(@Id, @FirstName, @LastName, @SupervisorId, @BranchId);";
+                    string query = "UPDATE INTO dbo.studentdata SET NAME = @" + "([Id], [FirstName], [LastName], [SupervisorId], [BranchId]) VALUES " + "(@Id, @FirstName, @LastName, @SupervisorId, @BranchId);";
                     using (SqlCommand command = new SqlCommand(query, con))
                     {
 
@@ -131,25 +130,29 @@ namespace studentdatasql.Respositories
             {
                 using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                   con.Open();
-                   string query = "DELETE FROM dbo.studentdata WHERE [Id] = @id"
-                   using (SqlCommand command = new SqlCommand(query, con))
-                   {
+                    con.Open();
+                    string query = "DELETE FROM dbo.studentdata WHERE [Id] = @id";
+                    using (SqlCommand command = new SqlCommand(query, con))
+                    {
 
-                    command.Parameters.Add("@Id", SqlDbType.Int).Value = person.Id;
-                    int rowDeleted = command.ExecuteNonQuery();
+                        command.Parameters.Add("@Id", SqlDbType.Int).Value = person.Id;
+                        int rowDeleted = command.ExecuteNonQuery();
 
                         if (rowDeleted > 0)
                         {
                             return "Working. WELLDONE";
 
                         }
-
-                   }
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return "NOT WORKING. FIX IT. idk why";
+
         }
 
-
     }
-}
+}   

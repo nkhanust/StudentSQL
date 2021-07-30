@@ -6,10 +6,19 @@
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+	<PackageReference Include="System.Data.SqlClient" Version="4.8.2" />  
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentSQL\StudentSQL.csproj" />
+    <Content Remove="C:\Users\178791\.nuget\packages\mongodb.driver.core\2.13.0\build\../runtimes/win/native/libzstd.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\178791\.nuget\packages\mongodb.driver.core\2.13.0\build\../runtimes/win/native/snappy32.dll" />
   </ItemGroup>
 
 </Project>
