@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using studentdatasql.Respositories;
 using studentdatasql.Models;
-
+using System.Collections.Generic;
 
 namespace StudentSQL.Controllers
 {
@@ -24,9 +24,9 @@ namespace StudentSQL.Controllers
         }
 
         [HttpGet]
-        public void GetPerson()
+        public List<string> GetPersons()
         {
-            persons.GetPerson();
+            return persons.GetPersons();
         }
 
         [HttpPost]
@@ -41,10 +41,10 @@ namespace StudentSQL.Controllers
             return persons.PutPerson(person);
         }
 
-        [HttpDelete]
-        public string DeletePerson(Person person)
+        [HttpDelete ("{Id}")] 
+        public string DeletePerson(int Id)
         {
-            return persons.DeletePerson(person);
+            return persons.DeletePerson (Id);
         }
 
     }

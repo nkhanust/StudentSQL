@@ -9,13 +9,13 @@ namespace studentdatasql.Interfaces
 {
     interface IPersonRepository
     {
-        void GetPerson();
+        List<string> GetPersons();
 
-        string PostPerson(Person person );
+        string PostPerson(Person person);
 
         string PutPerson(Person person);
 
-        string DeletePerson(Person person);
+        string DeletePerson(int Id);
     }
 
 }
