@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace sql_web_api.Models
+namespace studentdatasql.Models
 {
     public class Person
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string FirstName { get; set; }
 

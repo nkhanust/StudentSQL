@@ -1,63 +1,56 @@
 using Microsoft.AspNetCore.Mvc;
-using sql_web_api.Models;
-using System;
+using Microsoft.Extensions.Configuration;
+using studentdatasql.Respositories;
+using studentdatasql.Models;
 using System.Collections.Generic;
-using System.Linq;
-using sql.client;
-using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
-
 
 namespace StudentSQL.Controllers
-
 {
     [Route("api/[controller]")]
     [ApiController]
 
-    public class PersonsController : ControllerBase
+    public class PersonsController : Controller
     {
-        //Adding new person to database
-        public List<Person> persons = new()
-        {
-            new Person {Id = 1, FirstName = "Nabeel", LastName = "Khan", SupervisorId = 1, BranchId = 100}
-        };
 
-        //Get methods below
+        private IConfiguration Configuration;
+        private static PersonRepository persons;
+
+
+        public PersonsController(IConfiguration _configuration)
+        {
+            Configuration = _configuration;
+            persons = new PersonRepository(_configuration);
+
+        }
+
         [HttpGet]
-        public ActionResult<IEnumerable<Person>> GetAllPersons()
+        public List<string> GetPersons()
         {
-            return persons;
+            return persons.GetPersons();
         }
 
-
-        [HttpGet("{id}")]
-        public ActionResult<Person> GetPerson(int id)
+        [HttpPost]
+        public string PostPerson(Person person)
         {
-            try
-            {
-                string ConnectingString = this.Configuration.GetConnection("MyConnection");
-                using (SqlConnection con = new sqlConnection(ConnectingString))
-                {
-                    con.Open();
-                    SqlCommand Command = new SqlCommand("SelectAllitem", con);
-                    Command.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = Command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                           Console.WriteLine(string.Format)
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            
-
-            
+            return persons.PostPerson(person);
         }
+
+        [HttpPut]
+        public string PutPerson(Person person)
+        {
+            return persons.PutPerson(person);
+        }
+
+        [HttpDelete ("{Id}")] 
+        public string DeletePerson(int Id)
+        {
+            return persons.DeletePerson (Id);
+        }
+
     }
 }
+    
+
+
+
+        
