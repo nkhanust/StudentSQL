@@ -1,9 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using studentdatasql.Respositories;
 using studentdatasql.Models;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Serilog;
+
+using System.Collections.Generic;
+
 
 namespace StudentSQL.Controllers
 {
