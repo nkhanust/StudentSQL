@@ -15,51 +15,45 @@ namespace StudentSQL
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
 
-            CreateHostBuilder(args).Build().Run();
-
-            //building logger 
             var builder = new ConfigurationBuilder();
             BuildConfig(builder);
-            
+            //This is the setup for the logger
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(builder.Build())
                 .CreateLogger();
+
             CreateHostBuilder(args).Build().Run();
-
-
         }
 
 
 
-        //Ihostbuilder
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+            .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
 
 
-        //appsettings.json set up 
-        static void BuildConfig(IConfigurationBuilder Builder)
+
+
+        static void BuildConfig(IConfigurationBuilder builder)
         {
-            Builder.SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-               .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
-               .AddEnvironmentVariables();
+            //This tells our builder the ability to talk to appsettings.json in the current directory
+            builder.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                //This obtains the whatever enviroment it is running and override it, if it doesnt find any enviroment, run production.json
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIROMENT") ?? "Prodution"}.json", optional: true)
+                .AddEnvironmentVariables();
+            //write it t a text file instead of console.
         }
-
-        
     }
-
-    
-
-
-
-
 
 }
 

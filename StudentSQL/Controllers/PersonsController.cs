@@ -53,10 +53,9 @@ namespace StudentSQL.Controllers
         [HttpDelete("{Id}")]
         public string DeletePerson(int Id)
         {
-            _logger.Information("Person with ID number" + Id + " has been deleted from the records");
+            _logger.Information(" Person with ID number" + Id + " has been deleted from the records");
             return persons.DeletePerson(Id);
         }
-
     }
 }
     
